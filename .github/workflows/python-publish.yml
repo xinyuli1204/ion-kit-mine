@@ -51,15 +51,21 @@ jobs:
         cd python && python -m build && cd ../
         mv python/dist dist
 
-#
+    - name: Publish package distributions to TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+
   publish-on-macos:
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v4
-#    - uses: actions/setup-python@v5
-#      with:
-#        python-version: '3.10'
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
     - name: Download OS Binary
       shell: bash
@@ -70,24 +76,13 @@ jobs:
         cp  macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
         cp  macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
         ls python/ionpy/module/macos
-        mkdir /Users/runner/hostedtoolcache
+       
+    - name: Build package
+      run: |
+        cd python && python -m build && cd ../
+        mv python/dist dist
+        ls
 
-    - name: Publish package distributions to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-
-
-#
-#
-#    - name: Build package
-#      run: |
-#        cd python && python -m build && cd ../
-#        mv python/dist dist
-#        ls
-#
 #  publish-on-windows:
 #
 #    runs-on: windows-2019
