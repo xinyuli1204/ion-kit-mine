@@ -48,6 +48,7 @@ jobs:
 
     - name: Build package
       run: |
+        mkdir dist
         cd python && python -m build && cd ../
         mv python/dist dist
 
@@ -76,9 +77,10 @@ jobs:
         cp  macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
         cp  macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
         ls python/ionpy/module/macos
-       
+
     - name: Build package
       run: |
+        mkdir dist
         cd python && python -m build && cd ../
         mv python/dist dist
         ls
