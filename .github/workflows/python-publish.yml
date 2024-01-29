@@ -49,8 +49,8 @@ jobs:
     - name: Build package
       run: |
         mkdir dist
-        cd python && python -m build && cd ../
-        mv python/dist dist
+        cd python && python -m build && mv dist ../dist
+        ls
 
     - name: Publish package distributions to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
@@ -76,16 +76,14 @@ jobs:
         cp  macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
         cp  macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
         cp  macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
-        ls python/ionpy/module/macos
 
     - name: Build package
       run: |
         mkdir dist
         pip install build
-        cd python && python -m build && cd ../
-        mv python/dist dist
+        cd python && python -m build && mv dist ../dist
         ls
-    
+
     - name: Publish package distributions to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
