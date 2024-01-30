@@ -43,9 +43,9 @@ jobs:
         run: |
           mkdir $GITHUB_WORKSPACE/windows
           unzip  ion-kit-*windows.zip  
-          cp  windows/bin/Halide.dll python/ionpy/module/windows/Halide.dll
-          cp  windows/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
-          cp  windows/bin/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
+          cp  $GITHUB_WORKSPACE/bin/Halide.dll python/ionpy/module/windows/Halide.dll
+          cp  $GITHUB_WORKSPACE/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
+          cp  $GITHUB_WORKSPACE/bin/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
           ls  python/ionpy/module/windows
 
       # Used to host cibuildwheel
