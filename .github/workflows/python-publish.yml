@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-11]
+        os: [ubuntu-20.04, macos-11, windows-2019]
 
     steps:
       - uses: actions/checkout@v4
@@ -16,7 +16,7 @@ jobs:
         with:
           repository: "fixstars/ion-kit"
           latest: true
-          fileName: "*"
+          fileName: "ion-kit*"
 
       - name: Copy macos file
         if: runner.os == 'macOS'
@@ -27,7 +27,7 @@ jobs:
           cp  $GITHUB_WORKSPACE/macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
           cp  $GITHUB_WORKSPACE/macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
           ls python/ionpy/module/macos
-      
+
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
@@ -37,15 +37,25 @@ jobs:
           cp  linux/lib/libion-core.so python/ionpy/module/linux/libion-core.so
           cp  linux/lib/libHalide.so.16.0.0 python/ionpy/module/linux/libHalide.so.16
           ls python/ionpy/module/linux
-          
+
+      - name: Copy windows file
+        if: runner.os == 'Windows'
+        run: |
+          mkdir $GITHUB_WORKSPACE/windows
+          unzip  ion-kit-*windows.zip  
+          cp  windows/bin/Halide.dll python/ionpy/module/windows/Halide.dll
+          cp  windows/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
+          cp  windows/bin/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
+          ls  python/ionpy/module/windows
+
       # Used to host cibuildwheel
       - uses: actions/setup-python@v3
         with:
           python-version: '3.9'
-      
+
       - name: Install cibuildwheel
         run: python -m pip install cibuildwheel==2.16.4
-      
+
       - name: Build wheels
         run: |
           cd python && python -m cibuildwheel --output-dir wheelhouse && ls
@@ -55,15 +65,12 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_BUILD: cp39-*
-      
-      - name: check
-        run: |
-           cd python/wheelhouse && ls 
+          
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: python/wheelhouse/*.whl
-  
+
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
