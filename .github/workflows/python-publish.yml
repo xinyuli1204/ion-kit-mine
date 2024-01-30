@@ -3,43 +3,52 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  publish-on-macos:
-    name: Build wheels on macos
-    runs-on: macos-latest
+  build-os-wheel:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-11]
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-
-    - name: Download OS Binary
-      shell: bash
-      run: |
-        mkdir macos
-        curl -L  $(curl -s https://api.github.com/repos/fixstars/ion-kit/releases/latest | grep browser_download_url | grep macos| cut -d'"' -f4)| tar zx -C  macos --strip-components 1
-        cp  macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
-        cp  macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
-        cp  macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
-
-    - name: Build package
-      run: |
-        mkdir dist
-        pip install build
-        cd python && python -m build && mv dist ../dist
-
-#    - name: Publish package distributions to TestPyPI
-#      uses: pypa/gh-action-pypi-publish@release/v1
-#      with:
-#        repository-url: https://test.pypi.org/legacy/
-#        user: __token__
-#        password: ${{ secrets.PYPI_API_TOKEN }}
-    
-    - uses: actions/upload-artifact@v4
-      with:
-        name: cibw-wheels-macos
-        path: python/dist/*.whl
-
+      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.9
+        with:
+          repository: "fixstars/ion-kit"
+          latest: true
+          fileName: "*"
+      
+      - name: Copy file
+        run: |
+          mkdir $GITHUB_WORKSPACE/macos
+          tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
+          cp  $GITHUB_WORKSPACE/macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
+          cp  $GITHUB_WORKSPACE/macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
+          cp  $GITHUB_WORKSPACE/macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
+          ls python/ionpy/module/macos
+      # Used to host cibuildwheel
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel==2.16.4
+      
+      - name: Build wheels
+        run: |
+          cd python && python -m cibuildwheel --output-dir wheelhouse && ls
+        env:
+          CIBW_ARCHS_MACOS: auto universal2
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
+      
+      - name: check
+        run: |
+           cd python/wheelhouse && ls 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: python/wheelhouse/*.whl
+  
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
