@@ -25,7 +25,7 @@ jobs:
           cp  $GITHUB_WORKSPACE/macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
           cp  $GITHUB_WORKSPACE/macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
           cp  $GITHUB_WORKSPACE/macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
-  
+          ls python/ionpy/module/macos
       # Used to host cibuildwheel
       - uses: actions/setup-python@v3
         with:
