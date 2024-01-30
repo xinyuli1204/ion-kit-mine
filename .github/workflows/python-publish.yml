@@ -22,6 +22,10 @@ jobs:
       - name: Build wheels
         run: |
           cd python && python -m cibuildwheel --output-dir wheelhouse && ls
+      
+      - name: check
+        run: |
+           ls wheelhouse
           
         # to supply options, put them in 'env', like:
         # env:
