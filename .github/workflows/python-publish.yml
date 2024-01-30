@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2019, macos-latest-large]
+        os: [windows-2019, macos-11]
 
     steps:
       - uses: actions/checkout@v4
@@ -17,11 +17,14 @@ jobs:
       - uses: actions/setup-python@v3
 
       - name: Install cibuildwheel
+      
         run: python -m pip install cibuildwheel==2.16.4
 
       - name: Build wheels
         run: |
           cd python && python -m cibuildwheel --output-dir wheelhouse && ls
+        env:
+          CIBW_ARCHS_MACOS: auto universal2
       
       - name: check
         run: |
