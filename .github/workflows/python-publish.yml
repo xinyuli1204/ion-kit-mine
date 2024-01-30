@@ -17,27 +17,28 @@ jobs:
           repository: "fixstars/ion-kit"
           latest: true
           fileName: "ion-kit*"
+      - name: check
+        run: |
+          ls
 
       - name: Copy macos file
         if: runner.os == 'macOS'
         run: |
-          mkdir macos
-          tar xzf  ion-kit-*macos.tar.gz  -C macos --strip-components 1
-          cp  macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
-          cp  macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
-          cp  macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
-          rm -rf macos
+          mkdir $GITHUB_WORKSPACE/macos
+          tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
+          cp  $GITHUB_WORKSPACE/macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
+          cp  $GITHUB_WORKSPACE/macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
+          cp  $GITHUB_WORKSPACE/macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
           ls python/ionpy/module/macos
 
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
-          mkdir linux
-          tar xzf  ion-kit-*linux.tar.gz  -C linux -strip-components 1
-          cp  linux_module/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
-          cp  linux_module/lib/libion-core.so python/ionpy/module/linux/libion-core.so
-          cp  linux_module/lib/libHalide.so.16.0.0 python/ionpy/module/linux/libHalide.so.16
-          rm -rf linux
+          mkdir $GITHUB_WORKSPACE/linux
+          tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
+          cp  $GITHUB_WORKSPACE/linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
+          cp  $GITHUB_WORKSPACE/linux/lib/libion-core.so python/ionpy/module/linux/libion-core.so
+          cp  $GITHUB_WORKSPACE/linux/lib/libHalide.so.16.0.0 python/ionpy/module/linux/libHalide.so.16
           ls python/ionpy/module/linux
 
       - name: Copy windows file
@@ -45,7 +46,6 @@ jobs:
         run: |
           mkdir windows
           unzip  ion-kit-*windows.zip  && mv ion-kit*/*  windows
-          rm ion-kit-*windows.zip
           cp  windows/bin/Halide.dll python/ionpy/module/windows/Halide.dll
           cp  windows/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
           cp  windows/bin/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
