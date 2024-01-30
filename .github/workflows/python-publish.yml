@@ -17,8 +17,9 @@ jobs:
           repository: "fixstars/ion-kit"
           latest: true
           fileName: "*"
-      
+
       - name: Copy macos file
+        if: runner.os == 'macOS'
         run: |
           mkdir $GITHUB_WORKSPACE/macos
           tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
@@ -28,6 +29,7 @@ jobs:
           ls python/ionpy/module/macos
       
       - name: Copy linux file
+        if: runner.os == 'Linux'
         run: |
           mkdir $GITHUB_WORKSPACE/linux
           tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
