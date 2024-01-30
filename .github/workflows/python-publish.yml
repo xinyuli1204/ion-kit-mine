@@ -44,8 +44,8 @@ jobs:
       - name: Copy windows file
         if: runner.os == 'Windows'
         run: |
-          mkdir windows
-          unzip  ion-kit-*windows.zip  && mv ion-kit*/*  windows
+          mkdir $GITHUB_WORKSPACE/windows
+          unzip  ion-kit-*windows.zip  && mv ion-kit*/*  $GITHUB_WORKSPACE/windows
           cp  windows/bin/Halide.dll python/ionpy/module/windows/Halide.dll
           cp  windows/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
           cp  windows/bin/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
