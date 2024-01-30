@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-11]
+        os: [ubuntu-20.04, macos-11, windows-2019]
 
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +40,8 @@ jobs:
         env:
           CIBW_ARCHS_MACOS: universal2
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
+          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_BUILD: cp39-*
       
       - name: check
