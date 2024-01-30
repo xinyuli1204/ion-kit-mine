@@ -18,7 +18,7 @@ jobs:
           latest: true
           fileName: "*"
       
-      - name: Copy file
+      - name: Copy macos file
         run: |
           mkdir $GITHUB_WORKSPACE/macos
           tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
@@ -26,6 +26,16 @@ jobs:
           cp  $GITHUB_WORKSPACE/macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
           cp  $GITHUB_WORKSPACE/macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
           ls python/ionpy/module/macos
+      
+      - name: Copy linux file
+        run: |
+          mkdir $GITHUB_WORKSPACE/linux
+          tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
+          cp  linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
+          cp  linux/lib/libion-core.so python/ionpy/module/linux/libion-core.so
+          cp  linux/lib/libHalide.so.16.0.0 python/ionpy/module/linux/libHalide.so.16
+          ls python/ionpy/module/linux
+          
       # Used to host cibuildwheel
       - uses: actions/setup-python@v3
         with:
