@@ -4,7 +4,8 @@ on: [push, pull_request]
 
 jobs:
   publish-on-macos:
-    runs-on: macos-latest-xlarge
+    name: Build wheels on macos
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v4
