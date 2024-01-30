@@ -17,6 +17,9 @@ jobs:
           repository: "fixstars/ion-kit"
           latest: true
           fileName: "ion-kit*"
+      - name: check
+        run: |
+          ls
 
       - name: Copy macos file
         if: runner.os == 'macOS'
@@ -41,11 +44,11 @@ jobs:
       - name: Copy windows file
         if: runner.os == 'Windows'
         run: |
-          mkdir $GITHUB_WORKSPACE/windows
-          unzip  ion-kit-*windows.zip  
-          cp  $GITHUB_WORKSPACE/bin/Halide.dll python/ionpy/module/windows/Halide.dll
-          cp  $GITHUB_WORKSPACE/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
-          cp  $GITHUB_WORKSPACE/bin/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
+          mkdir windows
+          unzip  ion-kit-*windows.zip  && mv ion-kit*/*  windows
+          cp  windows/Halide.dll python/ionpy/module/windows/Halide.dll
+          cp  windows/ion-core.dll python/ionpy/module/windows/ion-core.dll
+          cp  windows/ion-bb.dll python/ionpy/module/windows/ion-bb.dll
           ls  python/ionpy/module/windows
 
       # Used to host cibuildwheel
@@ -65,7 +68,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_BUILD: cp39-*
-          
+
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
