@@ -15,9 +15,9 @@ def get_plat():
 
 # This creates a list which is empty but returns a length of 1.
 # Should make the wheel a binary distribution and platlib compliant.
-# class EmptyListWithLength(list):
-#     def __len__(self):
-#         return 1
+class EmptyListWithLength(list):
+    def __len__(self):
+        return 1
 
 package_data: List[str] = []
 
@@ -31,11 +31,11 @@ elif platform.system() == 'Linux':
 setup(
     packages=["ionpy"],
     package_data={"ionpy": package_data},
-    # ext_modules=EmptyListWithLength(),
+    ext_modules=EmptyListWithLength(),
     include_package_data=False,
     options={
         "bdist_wheel": {
-            "plat_name": get_plat(),
+            # "plat_name": get_plat(),
             "python_tag": "py3",
         },
     },
