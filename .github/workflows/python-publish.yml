@@ -19,7 +19,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-11, windows-2019]
+        # os: [ubuntu-20.04, macos-11, windows-2019]
+         os: [macos-11]
+
 
     steps:
       - uses: actions/checkout@v4
@@ -74,7 +76,7 @@ jobs:
         run: |
           cd python && python -m cibuildwheel --output-dir wheelhouse
         env:
-          CIBW_ARCHS_MACOS: auto universal2
+          CIBW_ARCHS_MACOS: auto 
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
@@ -88,6 +90,8 @@ jobs:
       - name: test wheels
         run: |
           ls python/wheelhouse/*.whl
+          pip install python/wheelhouse/*.whl
+          python -c "import ionpy"
       
           
 
