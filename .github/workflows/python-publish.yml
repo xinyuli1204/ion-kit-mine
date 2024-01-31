@@ -90,7 +90,7 @@ jobs:
       - name: test wheels
         run: |
           ls python/wheelhouse/*.whl
-          pip install python/wheelhouse/*.whl
+          pip install python/wheelhouse/*x86_64.whl
           python -c "import ionpy"
       
           
