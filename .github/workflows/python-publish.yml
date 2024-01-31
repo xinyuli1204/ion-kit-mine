@@ -84,6 +84,12 @@ jobs:
         with:
           name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: python/wheelhouse/*.whl
+      
+      - name: test wheels
+        run: |
+          pip install python/wheelhouse/*.whl
+          python -c "import ionpy"
+          
 
   build_sdist:
     name: Build source distribution
