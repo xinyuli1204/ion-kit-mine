@@ -11,13 +11,14 @@ name: Upload Python Package
 on:
   release:
     types: [published]
+
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-         os: [ubuntu-20.04, macos-11]
+         os: [ubuntu-20.04, macos-11, windows-2019]
        
 
 
@@ -25,11 +26,11 @@ jobs:
       - uses: actions/checkout@v4
 
  
-      - name: GitHub Tag Name example
-        run: |
-         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-         echo ${{ github.event.release.tag_name }}
+      # - name: GitHub Tag Name
+      #   run: |
+      #    echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+      #    echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+      #    echo ${{ github.event.release.tag_name }}
           
       - uses: robinraju/release-downloader@v1.9
         with:
