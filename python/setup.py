@@ -17,14 +17,14 @@ def get_plat():
 
 
 def get_version():
-    main_ns = {}
-    ver_path = convert_path('./ionpy/version.py')
-    with open(ver_path) as ver_file:
-        exec(ver_file.read(), main_ns)
-    if os.environ.get("GITHUB_REF_NAME") is not None:
-        tag = os.environ.get("GITHUB_REF_NAME")
+    if os.environ.get("VERSION") is not None:
+        tag = os.environ.get("VERSION")
     else:
-        tag = '1.6.0'
+        main_ns = {}
+        ver_path = convert_path('./ionpy/version.py')
+        with open(ver_path) as ver_file:
+            exec(ver_file.read(), main_ns)
+        tag = main_ns["__version__"]
     return tag
 
 
