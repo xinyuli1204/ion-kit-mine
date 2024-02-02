@@ -1,12 +1,11 @@
-import runpy
-import subprocess
-
-from setuptools import setup, find_namespace_packages
+from setuptools import setup
 import sys
 from typing import List
 import platform
 import sysconfig
 import os
+
+from setuptools._distutils.util import convert_path
 
 
 def get_plat():
@@ -17,7 +16,16 @@ def get_plat():
     return plat_form
 
 
-
+def get_version():
+    main_ns = {}
+    ver_path = convert_path('./ionpy/version.py')
+    with open(ver_path) as ver_file:
+        exec(ver_file.read(), main_ns)
+    if os.environ.get("GITHUB_REF_NAME") is not None:
+        tag = os.environ.get("GITHUB_REF_NAME")
+    else:
+        tag = '1.6.0'
+    return tag
 
 
 def main():
@@ -33,7 +41,7 @@ def main():
     setup(
         name="ion-python",
         packages=["ionpy"],
-        version="1.6.0",
+        version=get_version(),
         package_data={"ionpy": package_data},
         ext_modules=EmptyListWithLength(),
         include_package_data=False,
@@ -53,6 +61,4 @@ class EmptyListWithLength(list):
 
 
 if __name__ == "__main__":
-
     main()
-
