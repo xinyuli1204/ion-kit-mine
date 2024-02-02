@@ -103,7 +103,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build sdist
-        run: cd python && pipx run build --sdist
+        run: cd python && python -m build --sdist
+
 
       - uses: actions/upload-artifact@v4
         with:
