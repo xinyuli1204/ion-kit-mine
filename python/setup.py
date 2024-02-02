@@ -40,9 +40,20 @@ def main():
 
     setup(
         name="ion-python",
+        readme="README.md",
+        author="Takuro Iizuka",
+        author_email="t_iizuka@fixstars.com",
         packages=["ionpy"],
+        url="https://github.com/fixstars/ion-kit",
         version=get_version(),
+        classifiers=[
+            "Development Status :: 3 - Alpha",
+            "Programming Language :: Python"
+        ],
+        description = "Python Binding for ion-kit",
+        python_requires='>=3.8.0',
         package_data={"ionpy": package_data},
+        install_requires=["numpy>=1.24"],
         ext_modules=EmptyListWithLength(),
         include_package_data=False,
         options={
