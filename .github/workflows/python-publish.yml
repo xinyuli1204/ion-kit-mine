@@ -44,6 +44,7 @@ jobs:
       - name: Copy macos file
         if: runner.os == 'macOS'
         run: |
+          export VERSION=${{ github.event.release.tag_name }}
           mkdir $GITHUB_WORKSPACE/macos
           tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
           cp  $GITHUB_WORKSPACE/macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
@@ -54,7 +55,7 @@ jobs:
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
-          export GITHUB_REF_NAME=${{ github.event.release.tag_name }}
+          export VERSION=${{ github.event.release.tag_name }}
           mkdir $GITHUB_WORKSPACE/linux
           tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
           cp  $GITHUB_WORKSPACE/linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
@@ -66,6 +67,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           mkdir windows
+          set VERSION=${{ github.event.release.tag_name }}
           unzip  ion-kit-*windows.zip  && mv ion-kit*/*  windows
           cp  windows/bin/Halide.dll python/ionpy/module/windows/Halide.dll
           cp  windows/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
@@ -91,6 +93,7 @@ jobs:
           CIBW_SKIP: "*-win32 *-manylinux_i686"
           CIBW_BUILD: cp39-*
           CIBW_ENVIRONMENT: GITHUB_REF_NAME=${{ github.event.release.tag_name }}
+          CIBW_ENVIRONMENT: VERSION=${{ github.event.release.tag_name }}
 
       - uses: actions/upload-artifact@v4
         with:
