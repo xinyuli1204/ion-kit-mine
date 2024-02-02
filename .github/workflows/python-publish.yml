@@ -12,9 +12,6 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - main
-
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
