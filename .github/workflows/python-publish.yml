@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-         os: [ubuntu-20.04]
+         os: [ubuntu-20.04, macos-11, windows-2019]
        
 
 
@@ -54,7 +54,7 @@ jobs:
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
-       
+          export GITHUB_REF_NAME=${{ github.event.release.tag_name }}
           mkdir $GITHUB_WORKSPACE/linux
           tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
           cp  $GITHUB_WORKSPACE/linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
@@ -88,9 +88,8 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
-          CIBW_SKIP: "*-win32 *_i686"
-      
-            
+          CIBW_SKIP: "*-win32 *-manylinux_i686"
+          CIBW_BUILD: cp39-*
 
       - uses: actions/upload-artifact@v4
         with:
