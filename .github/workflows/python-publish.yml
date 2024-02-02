@@ -26,12 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - name: Test
-        run: |
-          echo $RELEASE_VERSION
-          echo ${{ env.RELEASE_VERSION }}
+      - name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+        with:
+    # Optionally strip `v` prefix
+          strip_v: true
+      - name: Use tag
+        run: echo ${{steps.tag.outputs.tag}}
 
           
       - uses: robinraju/release-downloader@v1.9
