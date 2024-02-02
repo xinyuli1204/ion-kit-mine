@@ -92,8 +92,8 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *-manylinux_i686"
           CIBW_BUILD: cp39-*
-          CIBW_ENVIRONMENT: GITHUB_REF_NAME=${{ github.event.release.tag_name }}
           CIBW_ENVIRONMENT: VERSION=${{ github.event.release.tag_name }}
+
 
       - uses: actions/upload-artifact@v4
         with:
