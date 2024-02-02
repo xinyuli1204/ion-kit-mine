@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-         os: [ubuntu-20.04, macos-11, windows-2019]
+         os: [ubuntu-20.04]
        
 
 
@@ -89,7 +89,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *_i686"
-          GITHUB_REF_NAME: ${{ github.event.release.tag_name }}
+          CIBW_ENVIRONMENT_LINUX: GITHUB_REF_NAME="${{ github.event.release.tag_name }}"
             
 
       - uses: actions/upload-artifact@v4
