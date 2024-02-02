@@ -35,8 +35,8 @@ setup(
     include_package_data=False,
     options={
         "bdist_wheel": {
-            # "plat_name": get_plat(),
-            "python_tag": "py3",
+            "plat_name": get_plat(),
+
         },
     },
 )
