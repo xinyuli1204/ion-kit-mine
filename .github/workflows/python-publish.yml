@@ -10,7 +10,7 @@ name: Upload Python Package
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
 
 jobs:
   build_wheels:
@@ -54,6 +54,7 @@ jobs:
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
+          export GITHUB_REF_NAME=${{ github.event.release.tag_name }}
           mkdir $GITHUB_WORKSPACE/linux
           tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
           cp  $GITHUB_WORKSPACE/linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
