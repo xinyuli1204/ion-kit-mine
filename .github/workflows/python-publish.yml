@@ -10,6 +10,8 @@ name: Upload Python Package
 
 on:
   push:
+    tags:
+      - '*'
     branches:
       - main
 
@@ -26,15 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get tag
-        id: tag
-        uses: dawidd6/action-get-tag@v1
-        with:
-    # Optionally strip `v` prefix
-          strip_v: true
-      - name: Use tag
-        run: echo ${{steps.tag.outputs.tag}}
-
+ 
+      - name: GitHub Tag Name example
+        run: |
+         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
           
       - uses: robinraju/release-downloader@v1.9
         with:
@@ -144,7 +142,7 @@ jobs:
       - name: Check dist
         run: ls dist
         
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
+      # - uses: pypa/gh-action-pypi-publish@release/v1
+      #   with:
+      #     password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+      #     repository-url: https://test.pypi.org/legacy/
