@@ -14,12 +14,9 @@ jobs:
 
   test_TEST_PYPI:
 
-    name: Test wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-         os: [ubuntu-20.04, macos-latest-xlarge]
-       
+    name: Test wheels on ubuntu-20.04
+    runs-on: ubuntu-20.04
+ 
     steps:
       - uses: actions/checkout@v4
       
@@ -29,8 +26,24 @@ jobs:
           
       - name: test
         run: |
+          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==0.2.1
+          python -c "import ionpy"
+   
+  test_TEST_PYPI1:
+    name: Test wheels on macos
+    runs-on: macos-latest-xlarge
+
+    steps:
+      - uses: actions/checkout@v4
+         
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: test
+        run: |
 
           pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==0.2.1
           python -c "import ionpy"
+
       
         
