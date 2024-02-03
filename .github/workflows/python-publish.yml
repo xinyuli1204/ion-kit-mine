@@ -91,7 +91,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *i686"
-          CIBW_BUILD: cp39-* cp310-* cp38-*
+          CIBW_BUILD: cp38-* cp39-* cp310-* cp311-* cp312-*
           CIBW_ENVIRONMENT: VERSION=${{ github.event.release.tag_name }}
 
 
