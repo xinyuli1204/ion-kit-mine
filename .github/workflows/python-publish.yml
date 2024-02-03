@@ -16,7 +16,7 @@ jobs:
    
   test_TEST_PYPI1:
     name: Test wheels on macos
-    runs-on: macos-13-xlarge
+    runs-on: macos-latest-xlarge
 
     steps:
       - uses: actions/checkout@v4
