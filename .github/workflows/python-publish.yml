@@ -16,7 +16,7 @@ jobs:
    
   test_TEST_PYPI1:
     name: Test wheels on macos
-    runs-on: macos-latest-xlarge
+    runs-on: flyci-macos-large-latest-m1
 
     steps:
       - uses: actions/checkout@v4
