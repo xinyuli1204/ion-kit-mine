@@ -36,11 +36,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
          
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
+     
       - name: test
-        run: |
+        run: 
+          brew install python
 
           pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==0.2.1
           python -c "import ionpy"
