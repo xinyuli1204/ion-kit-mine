@@ -12,22 +12,7 @@ on:
   push
 jobs:
 
-  test_TEST_PYPI:
 
-    name: Test wheels on ubuntu-20.04
-    runs-on: ubuntu-20.04
- 
-    steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          
-      - name: test
-        run: |
-          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==0.2.1
-          python -c "import ionpy"
    
   test_TEST_PYPI1:
     name: Test wheels on macos
@@ -35,11 +20,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-         
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          architecture: x64
      
       - name: test
         run: 
-          brew install python
+        
 
           pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==0.2.1
           python -c "import ionpy"
