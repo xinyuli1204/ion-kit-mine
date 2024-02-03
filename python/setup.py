@@ -1,3 +1,5 @@
+import io
+
 from setuptools import setup
 import sys
 from typing import List
@@ -29,6 +31,7 @@ def get_version():
 
 
 def main():
+    long_description = io.open("README.md", encoding="utf-8").read()
     package_data: List[str] = []
 
     if platform.system() == 'Windows':
@@ -40,18 +43,25 @@ def main():
 
     setup(
         name="ion-python",
-        readme="README.md",
         author="Takuro Iizuka",
         author_email="t_iizuka@fixstars.com",
         packages=["ionpy"],
+        long_description=long_description,
+        long_description_content_type="text/markdown",
         url="https://github.com/fixstars/ion-kit",
         version=get_version(),
+        python_requires=">=3.8.0",
         classifiers=[
             "Development Status :: 3 - Alpha",
-            "Programming Language :: Python"
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3 :: Only",
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
         ],
-        description = "Python Binding for ion-kit",
-        python_requires='>=3.8.0',
+        description="Python Binding for ion-kit",
         package_data={"ionpy": package_data},
         install_requires=["numpy>=1.24"],
         ext_modules=EmptyListWithLength(),
