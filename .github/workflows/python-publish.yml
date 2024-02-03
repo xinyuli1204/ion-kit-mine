@@ -116,7 +116,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build sdist
-        run: pip install build && cd python && python -m build --sdist
+        run: |
+          export VERSION=${{ github.event.release.tag_name }}
+          pip install build && cd python && python -m build --sdist
 
 
       - uses: actions/upload-artifact@v4
