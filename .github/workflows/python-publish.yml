@@ -166,6 +166,7 @@ jobs:
         with:
           python-version: '3.9'
       - name: test
+        if: failure()
         run: |
           pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==${{ github.event.release.tag_name }}
           python -c "import ionpy"
