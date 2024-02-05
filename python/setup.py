@@ -19,8 +19,8 @@ def get_plat():
 
 
 def get_version():
-    if os.environ.get("VERSION") is not None:
-        tag = os.environ.get("VERSION")
+    if os.environ.get("ION_KIT_VERSION") is not None:
+        tag = os.environ.get("ION_KIT_VERSION")
     else:
         main_ns = {}
         ver_path = convert_path('./ionpy/version.py')
@@ -64,7 +64,7 @@ def main():
         description="Python Binding for ion-kit",
         package_data={"ionpy": package_data},
         install_requires=["numpy>=1.24"],
-        ext_modules=EmptyListWithLength(),
+        # ext_modules=EmptyListWithLength(),
         include_package_data=False,
         options={
             "bdist_wheel": {
