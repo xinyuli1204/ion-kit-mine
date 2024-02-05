@@ -103,7 +103,7 @@ jobs:
 #
 #      - name: Build sdist
 #        run: |
-#          export VERSION=${{ github.event.release.tag_name }}
+#          export ION_KIT_VERSION=${{ github.event.release.tag_name }}
 #          pip install build && cd python && python -m build --sdist
 #
 
