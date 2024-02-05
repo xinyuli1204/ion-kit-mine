@@ -85,7 +85,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
-          CIBW_SKIP: "*-win32 *i686"
+          CIBW_SKIP: "*-win32 *i686 *musllinux*"
           CIBW_BUILD: cp39-* 
           CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ github.event.release.tag_name }}
 
