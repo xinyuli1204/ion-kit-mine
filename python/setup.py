@@ -64,9 +64,10 @@ def main():
         description="Python Binding for ion-kit",
         package_data={"ionpy": package_data},
         install_requires=["numpy>=1.24"],
-        ext_modules=EmptyListWithLength(),
+        # ext_modules=EmptyListWithLength(),
         include_package_data=False,
         options={
+            "python_tag": "py3",
             "bdist_wheel": {
                 "plat_name": get_plat(),
             },
