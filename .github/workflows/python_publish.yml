@@ -42,7 +42,7 @@ jobs:
       - name: Copy macos file
         if: runner.os == 'macOS'
         run: |
-          export ION_KIT_VERSION=${{ github.event.release.tag_name }}
+          export ION_KIT_VERSION=`git describe --tags | sed -e "s/^v//g"`
           mkdir $GITHUB_WORKSPACE/macos
           tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
           cp  $GITHUB_WORKSPACE/macos/lib/libHalide.16.0.0.dylib python/ionpy/module/macos/libHalide.16.dylib
@@ -53,7 +53,7 @@ jobs:
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
-          export ION_KIT_VERSION=${{ github.event.release.tag_name }}
+          export ION_KIT_VERSION=`git describe --tags | sed -e "s/^v//g"`
           mkdir $GITHUB_WORKSPACE/linux
           tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
           cp  $GITHUB_WORKSPACE/linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
