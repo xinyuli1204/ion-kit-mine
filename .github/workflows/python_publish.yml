@@ -15,7 +15,7 @@ on:
 jobs:
 
   release_cross_platform:
-     uses: .github/workflows/release.yml@ref
+     uses: xinyuli1204/ion-kit-mine/.github/workflows/release.yml@ref
      
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
