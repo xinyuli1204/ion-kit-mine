@@ -107,10 +107,10 @@ jobs:
 #          pip install build && cd python && python -m build --sdist
 #
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cibw-sdist
-          path: python/dist/*.tar.gz
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cibw-sdist
+      #     path: python/dist/*.tar.gz
         # to supply options, put them in 'env', like:
         # env:
         #   CIBW_SOME_OPTION: value
