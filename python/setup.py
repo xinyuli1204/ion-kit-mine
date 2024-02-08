@@ -27,6 +27,7 @@ def get_version():
         with open(ver_path) as ver_file:
             exec(ver_file.read(), main_ns)
         tag = main_ns["__version__"]
+    tag = tag.replace("v","")
     return tag
 
 
