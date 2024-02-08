@@ -8,6 +8,7 @@ on:
 jobs:
   release-linux:
     runs-on: ubuntu-20.04
+    name: release on linux
 
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +50,7 @@ jobs:
 
   release-windows:
     runs-on: windows-2019
+    name: release on windows
 
     steps:
       - uses: actions/checkout@v4
