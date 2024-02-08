@@ -129,65 +129,65 @@ jobs:
         # env:
         #   CIBW_SOME_OPTION: value
 
-  upload_TEST_PYPI:
-    needs: [build_wheels]
-    runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
+  # upload_TEST_PYPI:
+  #   needs: [build_wheels]
+  #   runs-on: ubuntu-latest
+  #   environment: pypi
+  #   permissions:
+  #     id-token: write
 
-    # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          # unpacks all CIBW artifacts into dist/
-          pattern: cibw-*
-          path: dist
-          merge-multiple: true
+  #   # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
+  #   # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         # unpacks all CIBW artifacts into dist/
+  #         pattern: cibw-*
+  #         path: dist
+  #         merge-multiple: true
 
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
+  #     - uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+  #         repository-url: https://test.pypi.org/legacy/
 
-  test_TEST_PYPI:
-    needs: [upload_TEST_PYPI]
-    name: Test wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-         os: [ubuntu-20.04]
+  # test_TEST_PYPI:
+  #   needs: [upload_TEST_PYPI]
+  #   name: Test wheels on ${{ matrix.os }}
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #        os: [ubuntu-20.04]
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v3
-        with:
-          python-version: '3.9'
-      - name: test
-        run: |
-          sleep 60 # wait package to upload
-          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==${{ github.event.release.tag_name }}
-          python -c "import ionpy"
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v3
+  #       with:
+  #         python-version: '3.9'
+  #     - name: test
+  #       run: |
+  #         sleep 60 # wait package to upload
+  #         pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ion-python==${{ github.event.release.tag_name }}
+  #         python -c "import ionpy"
       
 
-  upload_PYPI:
-    needs: [ test_TEST_PYPI ]
-    runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
+  # upload_PYPI:
+  #   needs: [ test_TEST_PYPI ]
+  #   runs-on: ubuntu-latest
+  #   environment: pypi
+  #   permissions:
+  #     id-token: write
 
-    # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          # unpacks all CIBW artifacts into dist/
-          pattern: cibw-*
-          path: dist
-          merge-multiple: true
+  #   # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
+  #   # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         # unpacks all CIBW artifacts into dist/
+  #         pattern: cibw-*
+  #         path: dist
+  #         merge-multiple: true
 
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+  #     - uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         password: ${{ secrets.PYPI_API_TOKEN }}
