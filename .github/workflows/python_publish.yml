@@ -10,7 +10,7 @@ name: Upload Python Package
 
 on:
   workflow_run:
-    workflows: ['Release',release-linux]
+    workflows: ['Release']
     types:
       - completed
 
@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-         os: [ubuntu-20.04, windows-2019]
+         os: [ubuntu-20.04]
 
     steps:
       - uses: actions/checkout@v4
