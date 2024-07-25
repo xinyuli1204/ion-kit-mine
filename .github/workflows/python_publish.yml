@@ -130,7 +130,6 @@ jobs:
           cp  $GITHUB_WORKSPACE/macos/lib/libHalide.17.0.1.dylib python/ionpy/module/macos/libHalide.17.dylib
           cp  $GITHUB_WORKSPACE/macos/lib/libion-core.dylib python/ionpy/module/macos/libion-core.dylib
           cp  $GITHUB_WORKSPACE/macos/lib/libion-bb.dylib python/ionpy/module/macos/libion-bb.dylib
-    #   cp extra .dylib
           mkdir $GITHUB_WORKSPACE/aravis
           curl -L https://github.com/Sensing-Dev/aravis/download/v0.8.31/aravis-0.8.31-arm-64-macos.tar.gz| tar zx -C $GITHUB_WORKSPACE/aravis --strip-components 1
           cp  $GITHUB_WORKSPACE/aravis/lib/libaravis-0.8.dylib python/ionpy/module/macos/libaravis-0.8.dylib
@@ -167,13 +166,10 @@ jobs:
           ls
           rm aravis.zip && mv aravis*/* aravis
           cp  aravis/bin/aravis-0.8-0.dll python/ionpy/module/windows/aravis-0.8-0.dll
-        
-        
           curl -L https://github.com/Sensing-Dev/aravis/releases/download/v0.8.31/aravis-0.8.31-dependencies.zip -o dependency.zip
           unzip dependency.zip
           ls
           rm dependency.zip && mv aravis*dependencies/* python/ionpy/module/windows/
-          
           ls  python/ionpy/module/windows
 
       # Used to host cibuildwheel
