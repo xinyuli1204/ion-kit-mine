@@ -9,9 +9,8 @@
 name: Upload Python Package
 
 on:
-  release:
-    types: [published]
-
+  push
+  
 jobs:
   build_ion_python_wheels:
     name: Build wheels on ${{ matrix.os }}
@@ -35,7 +34,7 @@ jobs:
           repository: "fixstars/ion-kit"
           latest: false
           fileName: "ion-kit*"
-          tag: ${{ github.event.release.tag_name }}
+          tag: v2.0.0
 
 
       - name: Copy macos file
